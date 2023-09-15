@@ -7,22 +7,51 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
-    public Button leftButton;
-    public Button rightButton;
+    private Vector3 position;
+    public Image car;
+
+    private bool moveLeft = false;
+    private bool moveRight = false;
 
     void Start()
     {
-        leftButton.onClick.AddListener(MoveLeft);
-        rightButton.onClick.AddListener(MoveRight);
+        position = car.transform.position;
     }
 
-    void MoveLeft()
+    void Update()
     {
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
+        if (moveLeft)
+        {
+            // Move the car to the left
+            position.x -= speed * Time.deltaTime;
+        }
+        else if (moveRight)
+        {
+            // Move the car to the right
+            position.x += speed * Time.deltaTime;
+        }
+
+        // Update the car's position continuously
+        car.transform.position = position;
     }
 
-    void MoveRight()
+    public void OnLeftButtonDown()
     {
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
+        moveLeft = true;
+    }
+
+    public void OnLeftButtonUp()
+    {
+        moveLeft = false;
+    }
+
+    public void OnRightButtonDown()
+    {
+        moveRight = true;
+    }
+
+    public void OnRightButtonUp()
+    {
+        moveRight = false;
     }
 }
