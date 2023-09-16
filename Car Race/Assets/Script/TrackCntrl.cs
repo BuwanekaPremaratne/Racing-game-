@@ -5,20 +5,19 @@ using UnityEngine.InputSystem.Controls;
 
 public class TrackCntrl : MonoBehaviour
 {
-    public float speed = 1.0f;
-    private Material material;
 
-    void Start()
-    {
-        material = GetComponent<SpriteRenderer>().material;
-    }
+     public float scrollSpeed = 1.0f;
+    public Renderer roadRenderer;
+
+    private float offset = 0.0f;
 
     void Update()
     {
-        float offsetX = Time.time * speed;
+        // Calculate the new offset based on time and scroll speed
+        offset += scrollSpeed * Time.deltaTime;
 
-        Vector2 offset = new Vector2(offsetX, 0f);
-
-        material.mainTextureOffset = offset;
+        // Apply the offset to the material's main texture vertically
+        roadRenderer.material.mainTextureOffset = new Vector2(0.0f, offset);
     }
+
 }
